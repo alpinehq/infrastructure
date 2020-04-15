@@ -34,3 +34,11 @@ resource "digitalocean_record" "all" {
     name = "*"
     ttl = 60
 }
+
+resource "digitalocean_record" "github_verification" {
+    domain = digitalocean_domain.alpinehq.name
+    type = "TXT"
+    value = "ddab17f0fa"
+    name = "_github-challenge-alpinehq.alpinehq.dev."
+    ttl = 3600
+}
