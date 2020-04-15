@@ -2,14 +2,14 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "web" {
-    image = "ubuntu-18-04-x64"
-    name = "alpinehq-web"
-    region = "nyc3"
-    size = "s-1vcpu-1gb"
-    monitoring = true
-    ssh_keys = [
-        digitalocean_ssh_key.beast.fingerprint,
-    ]
+  image      = "ubuntu-18-04-x64"
+  name       = "alpinehq-web"
+  region     = "nyc3"
+  size       = "s-1vcpu-1gb"
+  monitoring = true
+  ssh_keys = [
+    digitalocean_ssh_key.beast.fingerprint,
+  ]
 }
 
 resource "digitalocean_floating_ip" "web" {
@@ -18,27 +18,27 @@ resource "digitalocean_floating_ip" "web" {
 }
 
 resource "digitalocean_ssh_key" "beast" {
-    name = "matt@beast"
-    public_key = file("~/.ssh/id_rsa_alpinehq.pub")
+  name       = "matt@beast"
+  public_key = file("~/.ssh/id_rsa_alpinehq.pub")
 }
 
 resource "digitalocean_domain" "alpinehq" {
-    name = "alpinehq.dev"
-    ip_address = digitalocean_floating_ip.web.ip_address
+  name       = "alpinehq.dev"
+  ip_address = digitalocean_floating_ip.web.ip_address
 }
 
 resource "digitalocean_record" "all" {
-    domain = digitalocean_domain.alpinehq.name
-    type = "CNAME"
-    value = "@"
-    name = "*"
-    ttl = 60
+  domain = digitalocean_domain.alpinehq.name
+  type   = "CNAME"
+  value  = "@"
+  name   = "*"
+  ttl    = 60
 }
 
 resource "digitalocean_record" "github_verification" {
-    domain = digitalocean_domain.alpinehq.name
-    type = "TXT"
-    value = "ddab17f0fa"
-    name = "_github-challenge-alpinehq.alpinehq.dev."
-    ttl = 3600
+  domain = digitalocean_domain.alpinehq.name
+  type   = "TXT"
+  value  = "ddab17f0fa"
+  name   = "_github-challenge-alpinehq.alpinehq.dev."
+  ttl    = 3600
 }
