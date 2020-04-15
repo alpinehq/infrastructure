@@ -19,4 +19,4 @@ jobs:
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: ${{ env.tf_version }}
-        tf_acounts_subcommand: 'validate'
+        tf_actions_subcommand: 'validate'
